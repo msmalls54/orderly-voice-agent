@@ -104,18 +104,18 @@ test("voice session endpoint rejects cross-origin and rate-limited requests", as
   }
 });
 
-test("landing page contains the mock-only disclosure and no agent credential", async () => {
+test("backend root exposes no website or agent credential", async () => {
   const config = makeConfig();
   const store = new SmsStore(":memory:", new CryptoBox(config.DATA_ENCRYPTION_KEY, config.PII_HASH_KEY));
   const app = createApp({ config, logger: createLogger(config), store, provider: new MockSmsProvider() });
   const { baseUrl, server } = await listen(app);
   try {
     const response = await fetch(baseUrl);
-    const html = await response.text();
-    assert.equal(response.status, 200);
-    assert.match(html, /No card is charged and no order is placed/);
-    assert.equal(html.includes(API_KEY), false);
-    assert.equal(html.includes(AGENT_ID), false);
+    const body = await response.text();
+    assert.equal(response.status, 404);
+    assert.deepEqual(JSON.parse(body), { ok: false, code: "NOT_FOUND" });
+    assert.equal(body.includes(API_KEY), false);
+    assert.equal(body.includes(AGENT_ID), false);
   } finally {
     await closeServer(server);
     store.close();

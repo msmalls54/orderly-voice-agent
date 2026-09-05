@@ -18,7 +18,8 @@ recordings/
 .runtime/
 .railway/
 
-# Internal build logs and unsanitized presentation captures
+# Internal build logs and partially redacted source captures
 docs/11-buildathon-live-log.md
 docs/12-build-progress.md
 assets/deck/orderly-slide-payment-redacted.png
+.tmp-slide-review/

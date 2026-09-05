@@ -1,6 +1,5 @@
 import express, { type Express, type Request, type Response, type NextFunction } from "express";
 import helmet from "helmet";
-import path from "node:path";
 import type { AppConfig } from "./config.js";
 import { createElevenLabsVoiceRouter } from "./elevenlabs/voice-router.js";
 import { createDoorDashHealthRouter } from "./doordash/health-router.js";
@@ -144,15 +143,6 @@ export function createApp(deps: ApplicationDependencies): Express {
       ...(workers ? { workers } : {})
     });
   });
-
-  app.use(express.static(path.resolve("public"), {
-    fallthrough: true,
-    index: "index.html",
-    maxAge: "5m",
-    setHeaders: (res, filename) => {
-      if (filename.endsWith("index.html")) res.setHeader("cache-control", "no-cache");
-    }
-  }));
 
   app.use((_req, res) => {
     res.status(404).json({ ok: false, code: "NOT_FOUND" });

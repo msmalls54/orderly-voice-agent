@@ -4,13 +4,11 @@
 
 Orderly is a voice-first ordering agent built for people who find delivery apps difficult to navigate, especially older adults. A caller describes what they want, hears the exact cart and total, and confirms the purchase with a simple spoken “yes.”
 
-Orderly placed **4th overall at an AI Buildathon hosted at AWS Builder Loft**. During the build, it completed a real $19.01 DoorDash order for 12 donut holes and two apple fritters. The order was submitted once, reconciled successfully, and delivered to the event.
+Orderly placed **4th overall at an AI Buildathon hosted at AWS Builder Loft**. During the build, it completed a real $19.01 DoorDash order for **12 regular donut holes and two apple fritters from My Happy Donut**. The order was submitted once, reconciled successfully, and delivered to the event.
 
-[View the public Orderly dashboard](https://orderly-food-by-phone.lovable.app/)
+![Orderly buildathon proof slide showing the phone transcript and completed donut order](assets/deck/orderly-buildathon-proof-slide.png)
 
-![Sanitized live Orderly call transcript](assets/deck/orderly-sanitized-call-transcript.png)
-
-![Sanitized DoorDash receipt](assets/deck/orderly-doordash-live-receipt.png)
+*Live proof from the buildathon: a phone request and spoken “yes” placed the donut order shown above.*
 
 ## How it works
 
@@ -62,7 +60,6 @@ See [SECURITY.md](SECURITY.md) and [the architecture notes](docs/03-architecture
 - ElevenLabs voice and Conversational AI
 - DoorDash CLI 0.2.4
 - Railway deployment
-- Lovable observer dashboard
 - SQLite-backed encrypted state and durable transaction records
 
 ## Run the safe local demo
@@ -108,4 +105,3 @@ npm.cmd run audit:prod
 ## Project status
 
 The buildathon objective is complete. Exactly one supervised live order was placed and reconciled successfully. The repository remains a single-account prototype, not a production ordering service. Multi-user use would require tenant isolation, privacy and legal review, abuse controls, accessibility testing with target users, observability, incident response, and provider approval.
-
