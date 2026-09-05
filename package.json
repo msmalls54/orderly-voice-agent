@@ -1,0 +1,39 @@
+{
+  "name": "orderly-voice-agent",
+  "version": "0.1.0",
+  "private": true,
+  "packageManager": "npm@10.9.8",
+  "description": "Voice-first food ordering agent connecting AgentPhone, ElevenLabs, Railway, and the DoorDash CLI.",
+  "type": "module",
+  "engines": {
+    "node": ">=22.13"
+  },
+  "scripts": {
+    "dev": "tsx watch src/index.ts",
+    "demo": "tsx src/demo.ts",
+    "demo:send": "tsx src/admin/send-demo-webhook.ts",
+    "clean": "node --input-type=commonjs -e \"require('node:fs').rmSync('dist',{recursive:true,force:true})\"",
+    "build": "npm run clean && tsc -p tsconfig.build.json",
+    "install:dd-cli": "node scripts/install-dd-cli.mjs",
+    "start": "node dist/index.js",
+    "typecheck": "tsc --noEmit",
+    "test": "tsx --test --test-reporter=spec test/agentphone.e2e.test.ts test/elevenlabs.e2e.test.ts test/phone-order.test.ts test/doordash-cli.test.ts test/doordash-order-backend.test.ts",
+    "test:dist": "node --test --test-reporter=spec test/production-smoke.test.mjs",
+    "check:env": "tsx src/admin/check-env.ts",
+    "check": "npm run typecheck && npm test",
+    "verify": "npm run check && npm run build && npm run test:dist",
+    "audit:prod": "npm audit --omit=dev --audit-level=high"
+  },
+  "dependencies": {
+    "express": "5.2.1",
+    "helmet": "8.3.0",
+    "pino": "10.3.1",
+    "zod": "4.5.4"
+  },
+  "devDependencies": {
+    "@types/express": "5.0.6",
+    "@types/node": "26.4.1",
+    "tsx": "4.23.13",
+    "typescript": "7.0.2"
+  }
+}

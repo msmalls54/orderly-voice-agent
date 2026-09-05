@@ -1,0 +1,80 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1800" height="900" viewBox="0 0 1800 900">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#171925"/>
+      <stop offset="1" stop-color="#202335"/>
+    </linearGradient>
+    <filter id="shadow" x="-20%" y="-20%" width="140%" height="140%">
+      <feDropShadow dx="0" dy="16" stdDeviation="24" flood-color="#070812" flood-opacity="0.32"/>
+    </filter>
+  </defs>
+
+  <rect width="1800" height="900" rx="34" fill="url(#bg)"/>
+  <circle cx="1590" cy="100" r="230" fill="#F97316" opacity="0.05"/>
+  <circle cx="160" cy="860" r="300" fill="#F97316" opacity="0.035"/>
+
+  <g font-family="Inter, Segoe UI, Arial, sans-serif">
+    <g transform="translate(86 68)">
+      <rect width="48" height="48" rx="14" fill="#F97316"/>
+      <path d="M15 12h5l3 8-4 3c3 6 6 9 12 12l3-4 8 3v5c0 3-3 6-7 5-15-3-27-15-30-30-1-4 2-7 5-7h5" transform="scale(.72) translate(11 9)" fill="none" stroke="#FFF7ED" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="68" y="21" fill="#FFF7ED" font-size="18" font-weight="700" letter-spacing="2.2">AGENTPHONE LIVE CALL</text>
+      <text x="68" y="47" fill="#AEB2C2" font-size="17">Exact sanitized transcript · September 4, 2026</text>
+    </g>
+
+    <g transform="translate(1450 76)">
+      <rect width="250" height="46" rx="23" fill="#26382F" stroke="#4ADE80" stroke-opacity="0.45"/>
+      <circle cx="27" cy="23" r="7" fill="#4ADE80"/>
+      <text x="47" y="30" fill="#DDFCE7" font-size="17" font-weight="700" letter-spacing="1">COMPLETED · 51s</text>
+    </g>
+
+    <line x1="143" y1="182" x2="143" y2="734" stroke="#3C4053" stroke-width="3"/>
+
+    <g transform="translate(86 165)">
+      <circle cx="57" cy="39" r="14" fill="#F97316" stroke="#171925" stroke-width="7"/>
+      <text x="100" y="22" fill="#FCA56A" font-size="17" font-weight="800" letter-spacing="1.7">CALLER</text>
+      <text x="190" y="22" fill="#777C90" font-size="16">15:58:55–15:58:59 PT · captured across two natural speech turns</text>
+      <rect x="100" y="43" width="1514" height="130" rx="23" fill="#272A3A" stroke="#3B3F53" filter="url(#shadow)"/>
+      <text x="140" y="94" fill="#F7F1E8" font-size="29" font-weight="650">
+        <tspan x="140" dy="0">“Get me 12 donut”</tspan>
+        <tspan x="140" dy="43">“holes and 2 apple fritters from My Happy Donut.”</tspan>
+      </text>
+    </g>
+
+    <g transform="translate(86 370)">
+      <circle cx="57" cy="39" r="14" fill="#F7E7CE" stroke="#171925" stroke-width="7"/>
+      <text x="100" y="22" fill="#F7E7CE" font-size="17" font-weight="800" letter-spacing="1.7">ORDERLY</text>
+      <text x="215" y="22" fill="#777C90" font-size="16">15:59:10 PT · live DoorDash preview</text>
+      <rect x="100" y="43" width="1514" height="154" rx="23" fill="#F6E8D5" filter="url(#shadow)"/>
+      <text x="140" y="94" fill="#20212C" font-size="28" font-weight="650">
+        <tspan x="140" dy="0">“I have the cart ready. The exact total is $19.01, including a $2.50 tip.”</tspan>
+        <tspan x="140" dy="43">“Say yes to place it, or say cancel.”</tspan>
+      </text>
+    </g>
+
+    <g transform="translate(86 600)">
+      <circle cx="57" cy="39" r="14" fill="#F97316" stroke="#171925" stroke-width="7"/>
+      <text x="100" y="22" fill="#FCA56A" font-size="17" font-weight="800" letter-spacing="1.7">CALLER</text>
+      <text x="190" y="22" fill="#777C90" font-size="16">15:59:22 PT · verbal approval</text>
+      <rect x="100" y="43" width="300" height="78" rx="23" fill="#F97316" filter="url(#shadow)"/>
+      <text x="140" y="94" fill="#FFFFFF" font-size="31" font-weight="800">“Yes.”</text>
+    </g>
+
+    <g transform="translate(535 600)">
+      <rect width="1165" height="121" rx="23" fill="#22352D" stroke="#4ADE80" stroke-opacity="0.42"/>
+      <circle cx="42" cy="42" r="15" fill="#4ADE80" opacity="0.18"/>
+      <path d="M34 42l6 6 12-14" fill="none" stroke="#4ADE80" stroke-width="4" stroke-linecap="round" stroke-linejoin="round"/>
+      <text x="78" y="37" fill="#A7F3C0" font-size="17" font-weight="800" letter-spacing="1.6">ORDERLY · AGENTPHONE TRANSCRIPT</text>
+      <text x="78" y="76" fill="#F1F8F4" font-size="24" font-weight="650">“DoorDash is processing the order. Order reference ••••cb93.”</text>
+      <text x="78" y="106" fill="#92A89C" font-size="15">Later reconciled to placed · My Happy Donut preparing</text>
+    </g>
+
+    <g transform="translate(86 808)">
+      <text fill="#8C91A4" font-size="15" letter-spacing="1.1">AGENTPHONE</text>
+      <text x="120" fill="#555A70" font-size="19">→</text>
+      <text x="154" fill="#8C91A4" font-size="15" letter-spacing="1.1">ORDERLY</text>
+      <text x="255" fill="#555A70" font-size="19">→</text>
+      <text x="289" fill="#8C91A4" font-size="15" letter-spacing="1.1">DOORDASH CLI 0.2.4</text>
+      <text x="1614" fill="#666B7E" font-size="14" text-anchor="end">Phone and full reference removed · caller turns 100% confidence</text>
+    </g>
+  </g>
+</svg>

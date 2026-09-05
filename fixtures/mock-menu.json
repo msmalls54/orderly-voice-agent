@@ -1,0 +1,35 @@
+{
+  "fixture_version": "2026-09-03.1",
+  "mode": "mock",
+  "contains_real_data": false,
+  "store": {
+    "store_ref": "store_mock_harbor_bowl",
+    "name": "Harbor Bowl Kitchen",
+    "availability": "open",
+    "is_fictional": true
+  },
+  "items": [
+    {
+      "item_ref": "item_mock_chicken_rice_001",
+      "name": "Chicken and rice bowl",
+      "description": "Grilled chicken, steamed rice, greens, and house sauce.",
+      "price_cents": 1850,
+      "allowed_modifiers": ["No onions", "Sauce on side"]
+    },
+    {
+      "item_ref": "item_mock_tofu_rice_002",
+      "name": "Tofu and rice bowl",
+      "description": "Roasted tofu, steamed rice, greens, and house sauce.",
+      "price_cents": 1725,
+      "allowed_modifiers": ["No onions", "Sauce on side"]
+    },
+    {
+      "item_ref": "item_mock_chicken_salad_003",
+      "name": "Chicken garden salad",
+      "description": "Grilled chicken, mixed greens, cucumber, and dressing.",
+      "price_cents": 1695,
+      "allowed_modifiers": ["No onions", "Dressing on side"]
+    }
+  ]
+}
+

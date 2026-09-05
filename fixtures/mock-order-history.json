@@ -1,0 +1,26 @@
+{
+  "fixture_version": "2026-09-03.1",
+  "mode": "mock",
+  "contains_real_data": false,
+  "orders": [
+    {
+      "order_ref": "order_mock_tue_20260901",
+      "ordered_at_local": "2026-09-01T18:10:00-07:00",
+      "store_ref": "store_mock_harbor_bowl",
+      "store_name": "Harbor Bowl Kitchen",
+      "items": [
+        {
+          "item_ref": "item_mock_chicken_rice_001",
+          "name": "Chicken and rice bowl",
+          "quantity": 1,
+          "modifiers": ["No onions"],
+          "unit_price_cents": 1850
+        }
+      ],
+      "fulfillment": "delivery",
+      "address_label": "Home",
+      "payment_label": "Visa ending 4242"
+    }
+  ]
+}
+

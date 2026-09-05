@@ -1,0 +1,259 @@
+{
+  "contract_version": "0.1.0",
+  "default_mode": "mock",
+  "purchase_enabled": false,
+  "common_request": {
+    "type": "object",
+    "required": ["request_id", "session_id"],
+    "properties": {
+      "request_id": { "type": "string", "format": "uuid" },
+      "session_id": { "type": "string", "format": "uuid" }
+    },
+    "additionalProperties": false
+  },
+  "model_exposed_tools": [
+    {
+      "name": "find_choices",
+      "permission": "read_only",
+      "description": "Return at most three short restaurant or menu choices for one active session.",
+      "input_schema": {
+        "type": "object",
+        "required": ["request_id", "session_id", "kind", "query", "limit"],
+        "properties": {
+          "request_id": { "type": "string", "format": "uuid" },
+          "session_id": { "type": "string", "format": "uuid" },
+          "kind": { "type": "string", "enum": ["restaurant", "menu_item"] },
+          "query": { "type": "string", "minLength": 1, "maxLength": 120 },
+          "store_ref": { "type": "string", "pattern": "^store_[A-Za-z0-9_-]{8,64}$" },
+          "limit": { "type": "integer", "minimum": 1, "maximum": 3 }
+        },
+        "additionalProperties": false
+      },
+      "success_data_schema": {
+        "type": "object",
+        "required": ["mode", "choices"],
+        "properties": {
+          "mode": { "type": "string", "enum": ["mock", "live_read_only"] },
+          "choices": {
+            "type": "array",
+            "maxItems": 3,
+            "items": {
+              "type": "object",
+              "required": ["ref", "name", "short_description"],
+              "properties": {
+                "ref": { "type": "string", "maxLength": 80 },
+                "name": { "type": "string", "maxLength": 80 },
+                "short_description": { "type": "string", "maxLength": 160 },
+                "price_cents": { "type": "integer", "minimum": 0, "maximum": 100000 },
+                "eta_min_minutes": { "type": "integer", "minimum": 0, "maximum": 300 },
+                "eta_max_minutes": { "type": "integer", "minimum": 0, "maximum": 300 }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "get_previous_order",
+      "permission": "read_only_sensitive",
+      "description": "Resolve a short natural-language time reference into at most three masked prior-order choices.",
+      "input_schema": {
+        "type": "object",
+        "required": ["request_id", "session_id", "time_reference", "limit"],
+        "properties": {
+          "request_id": { "type": "string", "format": "uuid" },
+          "session_id": { "type": "string", "format": "uuid" },
+          "time_reference": { "type": "string", "minLength": 1, "maxLength": 40 },
+          "limit": { "type": "integer", "minimum": 1, "maximum": 3 }
+        },
+        "additionalProperties": false
+      },
+      "success_data_schema": {
+        "type": "object",
+        "required": ["mode", "orders"],
+        "properties": {
+          "mode": { "type": "string", "enum": ["mock", "live_read_only"] },
+          "orders": {
+            "type": "array",
+            "maxItems": 3,
+            "items": {
+              "type": "object",
+              "required": ["order_ref", "day_label", "store_name", "item_summary"],
+              "properties": {
+                "order_ref": { "type": "string", "pattern": "^order_[A-Za-z0-9_-]{8,64}$" },
+                "day_label": { "type": "string", "maxLength": 40 },
+                "store_name": { "type": "string", "maxLength": 80 },
+                "item_summary": { "type": "string", "maxLength": 220 }
+              },
+              "additionalProperties": false
+            }
+          }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "draft_or_preview",
+      "permission": "reversible_cart_state",
+      "description": "Draft a single-store delivery cart, set an explicit tip, or produce a server-priced immutable preview.",
+      "input_schema": {
+        "type": "object",
+        "required": ["request_id", "session_id", "action", "expected_cart_version"],
+        "properties": {
+          "request_id": { "type": "string", "format": "uuid" },
+          "session_id": { "type": "string", "format": "uuid" },
+          "action": { "type": "string", "enum": ["draft", "set_tip", "preview"] },
+          "expected_cart_version": { "type": "integer", "minimum": 0 },
+          "store_ref": { "type": "string", "pattern": "^store_[A-Za-z0-9_-]{8,64}$" },
+          "items": {
+            "type": "array",
+            "maxItems": 6,
+            "items": {
+              "type": "object",
+              "required": ["item_ref", "quantity", "customizations"],
+              "properties": {
+                "item_ref": { "type": "string", "pattern": "^item_[A-Za-z0-9_-]{8,64}$" },
+                "quantity": { "type": "integer", "minimum": 1, "maximum": 4 },
+                "customizations": {
+                  "type": "array",
+                  "maxItems": 8,
+                  "items": { "type": "string", "minLength": 1, "maxLength": 80 }
+                }
+              },
+              "additionalProperties": false
+            }
+          },
+          "tip_cents": { "type": "integer", "minimum": 0, "maximum": 2000 },
+          "fulfillment_mode": { "type": "string", "const": "delivery" },
+          "schedule": { "type": "string", "const": "asap" }
+        },
+        "additionalProperties": false
+      },
+      "success_data_schema": {
+        "type": "object",
+        "required": ["mode", "state", "cart_version"],
+        "properties": {
+          "mode": { "type": "string", "enum": ["mock", "live_read_only"] },
+          "state": { "type": "string", "enum": ["DRAFTED", "PREVIEWED", "AWAITING_CONFIRMATION"] },
+          "cart_version": { "type": "integer", "minimum": 1 },
+          "checkout_hash": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+          "expires_at": { "type": "string", "format": "date-time" },
+          "confirmation_code": { "type": "string", "pattern": "^[0-9]{4}$" },
+          "store_name": { "type": "string", "maxLength": 80 },
+          "item_summary": { "type": "string", "maxLength": 300 },
+          "subtotal_cents": { "type": "integer", "minimum": 0 },
+          "fees_cents": { "type": "integer", "minimum": 0 },
+          "tax_cents": { "type": "integer", "minimum": 0 },
+          "tip_cents": { "type": "integer", "minimum": 0 },
+          "credits_cents": { "type": "integer", "minimum": 0 },
+          "total_cents": { "type": "integer", "minimum": 0, "maximum": 3000 },
+          "address_summary": { "type": "string", "maxLength": 80 },
+          "payment_summary": { "type": "string", "maxLength": 80 }
+        },
+        "additionalProperties": false
+      }
+    },
+    {
+      "name": "confirm_demo_preview",
+      "permission": "demo_state_only",
+      "description": "Confirm a mock preview for demonstration. This tool cannot place or submit an order.",
+      "input_schema": {
+        "type": "object",
+        "required": ["request_id", "session_id", "checkout_hash", "spoken_text"],
+        "properties": {
+          "request_id": { "type": "string", "format": "uuid" },
+          "session_id": { "type": "string", "format": "uuid" },
+          "checkout_hash": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+          "spoken_text": { "type": "string", "minLength": 1, "maxLength": 120 }
+        },
+        "additionalProperties": false
+      },
+      "success_data_schema": {
+        "type": "object",
+        "required": ["mode", "state", "purchase_attempted", "safe_to_speak"],
+        "properties": {
+          "mode": { "type": "string", "const": "mock" },
+          "state": { "type": "string", "const": "DEMO_CONFIRMED" },
+          "purchase_attempted": { "type": "boolean", "const": false },
+          "safe_to_speak": { "type": "string", "maxLength": 180 }
+        },
+        "additionalProperties": false
+      }
+    }
+  ],
+  "internal_only_operations": [
+    {
+      "name": "submit_order",
+      "route_exposed": false,
+      "enabled_in_buildathon": false,
+      "required_preconditions": [
+        "PURCHASE_ENABLED is exactly true",
+        "provider mode is live",
+        "state is APPROVED",
+        "checkout hash matches current snapshot",
+        "approval is unexpired and unused",
+        "account lock is held",
+        "idempotency record is durably written",
+        "no unresolved submit exists"
+      ]
+    },
+    {
+      "name": "reconcile_order",
+      "route_exposed": false,
+      "enabled_in_buildathon": false,
+      "required_preconditions": [
+        "state is RECONCILIATION_REQUIRED",
+        "no new submit is performed",
+        "status/history checks are read-only"
+      ]
+    }
+  ],
+  "error_envelope": {
+    "type": "object",
+    "required": ["ok", "error"],
+    "properties": {
+      "ok": { "type": "boolean", "const": false },
+      "error": {
+        "type": "object",
+        "required": ["code", "retryable", "safe_to_speak"],
+        "properties": {
+          "code": {
+            "type": "string",
+            "enum": [
+              "INVALID_ARGUMENT",
+              "UNAUTHENTICATED",
+              "FORBIDDEN",
+              "RATE_LIMITED",
+               "REPLAY_DETECTED",
+               "SESSION_NOT_FOUND",
+               "CART_VERSION_CONFLICT",
+               "STALE_PREVIEW",
+               "PREVIEW_CHANGED",
+               "PREVIEW_EXPIRED",
+               "CONFIRMATION_REQUIRED",
+               "EXACT_PHRASE_REQUIRED",
+               "CONFIRMATION_ALREADY_USED",
+               "TOTAL_LIMIT_EXCEEDED",
+               "UNSAFE_CATEGORY",
+               "UNSUPPORTED_CATEGORY",
+               "UNTRUSTED_CONTENT",
+               "PROVIDER_UNAVAILABLE",
+               "PROVIDER_SCHEMA_CHANGED",
+               "PROVIDER_SCHEMA_MISMATCH",
+               "AMBIGUOUS_SUBMIT",
+               "SUBMIT_OUTCOME_UNKNOWN",
+               "HUMAN_HANDOFF",
+               "SUPPORT_REQUIRED"
+            ]
+          },
+          "retryable": { "type": "boolean" },
+          "safe_to_speak": { "type": "string", "minLength": 1, "maxLength": 180 }
+        },
+        "additionalProperties": false
+      }
+    },
+    "additionalProperties": false
+  }
+}

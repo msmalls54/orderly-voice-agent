@@ -1,0 +1,43 @@
+{
+  "fixture_version": "2026-09-03.1",
+  "mode": "mock",
+  "contains_real_data": false,
+  "preview_id": "preview_mock_4186",
+  "canonical_snapshot": {
+    "schema_version": "0.1.0",
+    "session_id": "018f2f85-8f1a-7f34-9c20-5b47f7fe4186",
+    "provider_mode": "mock",
+    "cart_version": 1,
+    "store_ref": "store_mock_harbor_bowl",
+    "store_name": "Harbor Bowl Kitchen",
+    "items": [
+      {
+        "item_ref": "item_mock_chicken_rice_001",
+        "name": "Chicken and rice bowl",
+        "quantity": 1,
+        "modifiers": ["No onions"],
+        "unit_price_cents": 1850,
+        "line_cents": 1850
+      }
+    ],
+    "fulfillment_mode": "delivery",
+    "schedule": "asap",
+    "subtotal_cents": 1850,
+    "fees_cents": 299,
+    "tax_cents": 173,
+    "tip_cents": 350,
+    "credits_cents": 0,
+    "promo_ref": null,
+    "total_cents": 2672,
+    "address_ref": "address_mock_home",
+    "address_label": "Home, ZIP ending 4104",
+    "payment_ref": "payment_mock_visa_4242",
+    "payment_label": "Visa ending 4242",
+    "expires_at": "2026-09-04T23:59:00-07:00",
+    "confirmation_code": "4186"
+  },
+  "checkout_hash": "sha256:5ea379c6e5efa64f2b84bda0842634f999aa89b143c666c1a2f1dccc961164ee",
+  "confirmation_phrase": "Confirm demo order 4186",
+  "expires_at": "2026-09-04T23:59:00-07:00",
+  "purchase_enabled": false
+}

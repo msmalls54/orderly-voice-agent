@@ -1,0 +1,24 @@
+.env
+.env.*
+!.env.example
+*.log
+logs/
+tmp/
+.DS_Store
+node_modules/
+dist/
+coverage/
+*.pem
+*.key
+*.p12
+*.sqlite
+*.sqlite3
+data/
+recordings/
+.runtime/
+.railway/
+
+# Internal build logs and unsanitized presentation captures
+docs/11-buildathon-live-log.md
+docs/12-build-progress.md
+assets/deck/orderly-slide-payment-redacted.png
